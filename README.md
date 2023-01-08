@@ -1,1 +1,1 @@
-# go-arkcon
+# go-rcon
