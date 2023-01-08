@@ -1,36 +1,30 @@
 package main
 
 import (
-  "./arkrcon"
-  "fmt"
-  "bufio"
-  "os"
-  "strings"
+  "github.com/DoanRii/go-pkg-ark/arkrcon"
+  "net/http"
+  "github.com/gin-gonic/gin"
+  "strconv"
 )
 
-
-func main() {
-  ark, err := arkrcon.NewARKRconConnection("162.156.93.87:31011", "f7jhdJs8xcekXCKP")
+func Slomo(c *gin.Context) {
+  svr := c.Param("svr")
+  key := c.Param("key")
+  val, err := strconv.Atoi(c.Param("val"))
+  ark, err := arkrcon.NewARKRconConnection(svr, key)
   if err != nil {
-    fmt.Println(err)
+    c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Auth fail!"})
     return
   }
+  ark.Slomo(val)
+  c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Ok!"})
+}
 
-  ark.Slomo(1)
-  reader := bufio.NewReader(os.Stdin)
-  fmt.Println("RCON")
-  fmt.Println("---------------------")
+func main() {
+  
+  router := gin.Default()
+    router.GET("/slomo/:svr/:key/:val", Slomo)
 
-  for {
-    fmt.Print("-> ")
-    text, _ := reader.ReadString('\n')
-    // convert CRLF to LF
-    text = strings.Replace(text, "\n", "", -1)
-
-    if strings.Compare("hi", text) == 0 {
-      fmt.Println("hello, Yourself")
-    }
-
-  }
-
+    router.Run("localhost:9222")
+  
 }

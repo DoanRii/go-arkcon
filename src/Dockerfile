@@ -9,6 +9,6 @@ COPY *.go ./
 
 RUN go build -o /go-arkcon
 
-#EXPOSE 8080
+EXPOSE 9222
 
-#CMD [ "/go-arkcon" ]
+CMD [ "/go-arkcon" ]
