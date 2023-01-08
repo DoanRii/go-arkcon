@@ -1,7 +1,7 @@
 package main
 
 import (
-  "github.com/DoanRii/go-arkcon/arkcon"
+  "./arkrcon"
   "fmt"
   "bufio"
   "os"
