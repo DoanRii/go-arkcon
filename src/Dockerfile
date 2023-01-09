@@ -1,14 +1,16 @@
-FROM golang:1.16-alpine
+FROM golang:1.19
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY go.mod ./
-RUN go mod tidy
+#ENV GIN_MODE=release
 
-COPY *.go ./
+COPY . .
 
-RUN go build -o /go-arkcon
+RUN go mod init github.com/DoanRii/go-arkcon
+RUN go mod tidy && go mod download && go mod verify
+
+RUN go build -v -o /usr/local/bin/app ./...
 
 EXPOSE 9222
 
-CMD [ "/go-arkcon" ]
+CMD ["app"]

@@ -1,7 +1,7 @@
 package main
 
 import (
-  "github.com/DoanRii/go-pkg-ark/arkrcon"
+  "github.com/DoanRii/go-arkrcon"
   "net/http"
   "github.com/gin-gonic/gin"
   "strconv"
@@ -20,11 +20,23 @@ func Slomo(c *gin.Context) {
   c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Ok!"})
 }
 
+func ArkShopAddPoints(c *gin.Context) {
+  svr := c.Param("svr")
+  key := c.Param("key")
+  steamID, err := strconv.Atoi(c.Param("steamID"))
+  amount, err := strconv.Atoi(c.Param("amount"))
+  ark, err := arkrcon.NewARKRconConnection(svr, key)
+  if err != nil {
+    c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Auth fail!"})
+    return
+  }
+  ark.ArkShopAddPoints(steamID, amount)
+  c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Ok!"})
+}
+
 func main() {
-  
   router := gin.Default()
     router.GET("/slomo/:svr/:key/:val", Slomo)
-
-    router.Run("localhost:9222")
-  
+    router.GET("/arkshopaddpoints/:svr/:key/:steamID/:amount", ArkShopAddPoints)
+    router.Run(":9222")
 }
