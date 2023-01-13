@@ -3,8 +3,7 @@ package main
 import (
 	"net/http"
 	"strconv"
-
-	"github.com/DoanRii/go-arkrcon"
+	"github.com/DoanRii/go-arkcon/arkrcon"
 	"github.com/gin-gonic/gin"
 )
 
