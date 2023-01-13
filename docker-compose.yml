@@ -1,8 +1,6 @@
 version: "3.8"
 services:
   web:
-    build: ./src
+    build: ./
     ports:
       - 9222:9222
-    volumes:
-      - ./bin:/app

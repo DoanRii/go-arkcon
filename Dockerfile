@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 RUN go mod init github.com/DoanRii/go-arkcon
-RUN go mod tidy && go mod download && go mod verify
+RUN go mod tidy && go mod verify
 
 RUN go build -v -o /usr/local/bin/app ./...
 
